@@ -43,20 +43,16 @@ def create_event(service,startDate,endDate):
                  'dateTime': endDate, #military time -05:00 is new york time zone
                  'timeZone': 'America/New_York'
              },
-             "recurrence": ["RRULE:FREQ=DAILY;COUNT=1"], 
             }
 
-        created_event = service.events().insert(calendarId="primary", body=event).execute()
+        created_event = service.events().insert(calendarId="4h98k0b8njnm5jtcj48j207qb4@group.calendar.google.com", body=event).execute()
 
         print(f"Event created: {created_event.get('htmlLink')}")
 
     except HttpError as error:
         print(f"An error occurred: {error}")
 
-def main():
+def create_event_final(dateOne,dateTwo):
     creds = get_credentials()
     service = build("calendar", "v3", credentials=creds)
-    create_event(service,"2024-03-04T16:00:00-05:00","2024-03-04T20:00:00-05:00")
-
-if __name__ == "__main__":
-    main()
+    create_event(service,dateOne,dateTwo)
