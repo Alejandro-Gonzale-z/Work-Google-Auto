@@ -5,6 +5,4 @@ shifts = scrape_work_schedule()
 for shiftKey, shiftValue in shifts.items():
     start = shiftValue[0]
     end = shiftValue[1]
-    print(start)
-    print(end)
     create_event_final(start,end)
