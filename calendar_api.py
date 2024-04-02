@@ -10,7 +10,6 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
-
 def main():
   """Shows basic usage of the Google Calendar API.
   Prints the start and name of the next 10 events on the user's calendar.
@@ -43,7 +42,7 @@ def main():
     events_result = (
         service.events()
         .list(
-            calendarId="primary",
+            calendarId="4h98k0b8njnm5jtcj48j207qb4@group.calendar.google.com",
             timeMin=now,
             maxResults=10,
             singleEvents=True,

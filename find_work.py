@@ -134,15 +134,48 @@ def scrape_work_schedule():
             del shifts[key]
         
         return shifts
+    
+    def multipleShiftsOneDayGPT(shifts):
+        shift_numbers = list(shifts.keys())
+        keys_to_remove = []
+        i = 0
+        while i < len(shift_numbers) - 1:
+            current_shift_number = shift_numbers[i]
+            current_date = shifts[current_shift_number][0]
+            current_day = current_date[0:11]
+            
+            j = i + 1
+            while j < len(shift_numbers):
+                next_shift_number = shift_numbers[j]
+                next_date = shifts[next_shift_number][0]
+                next_day = next_date[0:11]
+                
+                if current_day == next_day:
+                    shifts[current_shift_number][1] = shifts[next_shift_number][1]
+                    keys_to_remove.append(next_shift_number)
+                    j += 1
+                else:
+                    break
+            
+            i += 1
+
+        for key in keys_to_remove:
+            if key in shifts:
+                del shifts[key]
+            
+        return shifts
+
+
+
 
     def addTimeZone(shifts):
         for shift_key, shift_value in shifts.items():
             for i in range(len(shift_value)):
-                shift_value[i] += "-05:00"
+                shift_value[i] += "-04:00"
         return shifts
 
     shifts = formatDate(shifts)
-    return addTimeZone(multipleShiftsOneDay(shifts))
+    return addTimeZone(multipleShiftsOneDayGPT(shifts))
 
     # Submit the form if necessary
     # form.submit()
