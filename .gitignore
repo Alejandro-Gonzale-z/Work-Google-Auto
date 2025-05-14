@@ -3,3 +3,4 @@ test.js
 hello.py
 CREDENTIALS/
 __pycache__/
+chromedriver.exe

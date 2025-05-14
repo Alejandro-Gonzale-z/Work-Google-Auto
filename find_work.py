@@ -17,7 +17,7 @@ def scrape_work_schedule():
     chrome_options = Options()
 
     #add headless option to remove chrome opening on ur computer
-    chrome_options.add_argument('--headless')
+    # chrome_options.add_argument('--headless')
     
     #desktop version needs this line
     #driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver_path)
@@ -52,7 +52,6 @@ def scrape_work_schedule():
 
     schedule_button = driver.find_element(By.ID, 'divschedule')
     schedule_button.click()
-
     time.sleep(1)
     html = driver.page_source
 
@@ -65,13 +64,12 @@ def scrape_work_schedule():
         for row in table.find_all('tr'):
             cells = row.find_all(['td', 'th'])
             row_data = [cell.text.strip() for cell in cells]
-            if len(row_data) >= 7:
+            if len(row_data) > 10:
                 count += 1
                 if count not in shifts:
                         shifts[count] = []
                 shifts[count].append(row_data[2])
                 shifts[count].append(row_data[6])
-
     #print(shifts)
     # for item in workdates:
     #     try:
@@ -171,7 +169,8 @@ def scrape_work_schedule():
     def addTimeZone(shifts):
         for shift_key, shift_value in shifts.items():
             for i in range(len(shift_value)):
-                shift_value[i] += "-04:00"
+                shift_value[i] += "-04:00" # summer time zone
+                # shift_value[i] += "-05:00" # winter time zone
         return shifts
 
     shifts = formatDate(shifts)
